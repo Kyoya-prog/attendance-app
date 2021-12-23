@@ -1,5 +1,10 @@
 
 <h1>新規登録</h1>
+<ul>
+  <% @user.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+  <% end %>
+</ul>
 <%= form_with model: @user do |form| %>
   <p>名前</p>git a
   <%= form.text_field :name %>
