@@ -5,6 +5,10 @@ ruby '2.6.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.4', '>= 6.1.4.1'
+# Use bcrypt as the has for secure string
+gem 'bcrypt'
+# Use redis-actionpack as the database for session management
+gem 'redis-actionpack'
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3', '~> 1.4'
 # Use mysql2 as the database for Active Record

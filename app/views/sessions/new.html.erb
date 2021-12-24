@@ -1,0 +1,16 @@
+<h1>Sessions#new</h1>
+<h2>ログイン</h2>
+<!--<ul>-->
+  <%# @user.errors.full_messages.each do |msg| %>
+<!--    <li><%#= msg %></li>-->
+  <%# end %>
+<!--</ul>-->
+<%= form_with url:"signin" do |form| %>
+  <p>メールアドレス</p>
+  <%= form.text_field :email %>
+  <p>パスワード</p>
+  <%= form.text_field :password %>
+  <br>
+  <%= form.submit "ログイン"%>
+<% end %>
+<p>Find me in app/views/sessions/new.html.erb</p>
