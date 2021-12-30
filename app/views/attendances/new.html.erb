@@ -2,10 +2,11 @@
 
 <div>
   <p id="item"></p>
+  <%= @record.work_in_button  %>
+  <%= @record.break_in_button  %>
+  <%= @record.break_out_button  %>
+  <%= @record.work_out_button  %>
 </div>
-<%= button_to "出勤", attendances_work_in_path %>
-<%= button_to "休憩開始", attendances_break_in_url %>
-<%= button_to "休憩完了", attendances_break_out_path %>
-<%= button_to "退勤", attendances_work_out_path %>
+
 
 <%= javascript_include_tag 'attendance_new' %>
