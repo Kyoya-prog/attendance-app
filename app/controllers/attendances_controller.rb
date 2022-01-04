@@ -82,8 +82,6 @@ class AttendancesController < ApplicationController
     if current_attendance == nil
       current_attendance = current_user.attendances.new()
     end
-    puts current_attendance
-    puts "hogehoge"
     return current_attendance
   end
 
