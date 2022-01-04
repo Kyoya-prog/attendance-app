@@ -2,49 +2,28 @@
 
 module AttendanceDecorator
   def work_in_button
-    if work_in == nil
-      button_to "出勤", attendances_work_in_path , {:disabled=> false}
-    else
-      button_to "出勤", attendances_work_in_path , {:disabled=> true}
-    end
+    puts status
+    puts work_in
+    puts break_in
+    puts break_out
+    puts work_out
+    button_to "出勤", attendances_work_in_path , {:disabled=> status.keys.first != :before_work}
   end
 
   def break_in_button
-    if work_in == nil || work_out
-      button_to "休憩開始", attendances_break_in_path, {:disabled=> true }
-    elsif break_in != nil && break_out != nil && break_out < break_in # 一回休憩開始と終了を押して、休憩開始のみを押している場合 # 休憩開始していない
-      button_to "休憩開始", attendances_break_in_path, {:disabled=> true }
-    elsif break_in == nil # 休憩開始をしていない
-      button_to "休憩開始", attendances_break_in_path, {:disabled=> false }
-    elsif break_out == nil # 休憩開始しているけど休憩終了していない
-      button_to "休憩開始", attendances_break_in_path, {:disabled=> true }
-    else# 休憩開始もしていないし休憩終了もしていない
-      button_to "休憩開始", attendances_break_in_path, {:disabled=> false }
-    end
+    button_to "休憩開始", attendances_break_in_path, {:disabled=> status.keys.first != :work }
   end
 
   def break_out_button
-    if work_in == nil || work_out
-      button_to "休憩終了", attendances_break_out_path, {:disabled=> true }
-    elsif break_in != nil && break_out != nil && break_out < break_in # 一回休憩開始と終了を押して、休憩開始のみを押している場合
-      button_to "休憩完了", attendances_break_out_path, {:disabled=> false}
-    elsif break_in == nil # 休憩開始をしていない
-      button_to "休憩完了", attendances_break_out_path, {:disabled=> true}
-    elsif break_out != nil #休憩開始してるし、完了もしている
-      button_to "休憩完了", attendances_break_out_path, {:disabled=> true}
-    else #休憩開始してるが、完了をしていない
-      button_to "休憩完了", attendances_break_out_path, {:disabled=> false}
-    end
+    button_to "休憩終了", attendances_break_out_path, {:disabled=> status.keys.first != :break }
   end
 
   def work_out_button
-    if work_in == nil || work_out
-      button_to "退勤", attendances_work_out_path, {:disabled=> true }
-    elsif !break_in && break_out
-      button_to "退勤", attendances_work_out_path, {:disabled=> true }
-    else
-      button_to "退勤", attendances_work_out_path, {:disabled=> false }
-    end
+    button_to "退勤", attendances_work_out_path , {:disabled => status.keys.first != :work}
+  end
+
+  def worker_status
+    status.values.first
   end
 
   def work_in_view_data
@@ -86,11 +65,26 @@ module AttendanceDecorator
   end
 
   def break_time_view_data
-    if !break_time
-      time = "#{(break_time / 3600).round}:#{(break_time % 3600 / 60).round}"
-      "#{sprintf("%02d",time)}"
+    if break_time != 0
+      hour = (break_time / 3600).round
+      minute = (break_time % 3600 / 60).round
+      result = "#{sprintf("%02d",hour)}:#{sprintf("%02d",minute)}"
+      result
     else
       "00:00"
+    end
+  end
+
+  private
+  def status
+    if work_out && DateTime.now.beginning_of_day < work_out
+      {:after_work=>"退勤後"}
+    elsif (break_in && break_out == nil) || (break_in && break_out && break_out < break_in)
+      {:break=>"休憩中"}
+    elsif work_in == nil
+      {:before_work => "勤務前"}
+    else
+      {:work=>"勤務中"}
     end
   end
 end
