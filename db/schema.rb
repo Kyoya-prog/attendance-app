@@ -10,7 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_22_070601) do
+ActiveRecord::Schema.define(version: 2022_01_04_050024) do
+
+  create_table "attendances", charset: "utf8", force: :cascade do |t|
+    t.datetime "work_in"
+    t.datetime "break_in"
+    t.datetime "break_out"
+    t.datetime "work_out"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id"
+    t.integer "break_time", default: 0
+    t.index ["user_id"], name: "index_attendances_on_user_id"
+  end
 
   create_table "users", charset: "utf8", force: :cascade do |t|
     t.string "name"
@@ -21,4 +33,5 @@ ActiveRecord::Schema.define(version: 2021_12_22_070601) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "attendances", "users"
 end
