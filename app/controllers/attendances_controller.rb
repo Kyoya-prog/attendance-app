@@ -4,36 +4,23 @@ class AttendancesController < ApplicationController
   def index
     @wdays = %w[日 月 火 水 木 金 土]
     day = Date.today
-    start_date = Date::new(day.year,day.month, 1)
-    end_date = start_date >> 1
-    end_date = end_date - 1
-    #今何年の取得
-    year_name = start_date.year
-    @year_name = year_name
-    @record = []
+    @start_date = Date::new(day.year,day.month, 1)
+    @end_date = Date::new(day.year,day.month, -1)
+    @data = []
     #今月の羅列
-    (Date.parse("#{start_date}")..Date.parse("#{end_date}")).each do |date|
+    (Date.parse("#{@start_date}")..Date.parse("#{@end_date}")).each do |date|
       @date = date
-      @start_date = start_date
-      @end_date = end_date
       record = current_user.attendances.where(updated_at:date.all_day)
-      puts record
-      puts "record"
-      puts date.all_day
-      puts "hogehoge"
-      @record.append(record)
+      record = record.first || current_user.attendances.build
+      @data.append record
     end
+    puts @data
   end
 
   def new
-    puts @record
-    puts "piyopiyo"
   end
 
   def register_work_in
-    puts @record.work_in
-    puts @record.break_in
-    puts @record.work_out
     puts "@record"
       new_record = current_user.attendances.build
       new_record.work_in = current_date_time
@@ -41,7 +28,7 @@ class AttendancesController < ApplicationController
         redirect_to attendances_new_path
       else
         puts "error"
-        # エラー出す
+
       end
   end
 

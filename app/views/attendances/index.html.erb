@@ -18,36 +18,11 @@
       <tr>
         <td><%=date.strftime("%m月%d日") %></td>
         <td><%= @wdays[date.wday] %></td>
-        <% if @record[i].first %>
-          <% puts @record[i].first %>
-          <% puts @record[i].first.work_in %>
-          <% puts @record[i].first.work_out %>
-          <% puts "putput" %>
-        <td> <%= @record[i].first.work_in.strftime("%H:%M") %></td>
-        <% else %>
-        <td> </td>
-        <% end %>
-        <% if @record[i].first %>
-
-          <td> <%= @record[i].first.work_out.strftime("%H:%M") %></td>
-        <% else %>
-          <td> </td>
-        <% end %>
-        <% if @record[i].first %>
-          <td> <%= " #{((@record[i].first.work_out - @record[i].first.work_in) / 3600).round}:#{((@record[i].first.work_out - @record[i].first.work_in) % 3600 / 60).round}"  %></td>
-        <% else %>
-          <td> </td>
-        <% end %>
-        <% if @record[i].first %>
-          <td> <%= " #{((@record[i].first.work_out - @record[i].first.work_in - @record[i].first.break_time) / 3600).round}:#{((@record[i].first.work_out - @record[i].first.work_in - @record[i].first.break_time) % 3600 / 60).round} "  %></td>
-        <% else %>
-          <td> </td>
-        <% end %>
-        <% if @record[i].first %>
-          <td> <%= " #{(@record[i].first.break_time / 3600).round}:#{(@record[i].first.break_time % 3600 / 60).round}"  %></td>
-        <% else %>
-          <td> </td>
-        <% end %>
+        <td><%= @data[i].work_in_view_data %> </td>
+        <td><%= @data[i].work_out_view_data %> </td>
+        <td><%= @data[i].restraint_time_view_data %> </td>
+        <td><%= @data[i].work_time_view_data %> </td>
+        <td><%= @data[i].break_time_view_data %> </td>
       </tr>
     <%end%>
 

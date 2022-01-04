@@ -46,4 +46,44 @@ module AttendanceDecorator
       button_to "退勤", attendances_work_out_path, {:disabled=> false }
     end
   end
+
+  def work_in_view_data
+    if work_in
+      work_in.strftime("%H:%M")
+    else
+      ""
+    end
+  end
+
+  def work_out_view_data
+    if work_out
+      work_out.strftime("%H:%M")
+    else
+      ""
+    end
+  end
+
+  def restraint_time_view_data # 拘束時間
+    if work_in && work_out
+    "#{((work_out - work_in) / 3600).round}:#{((work_out - work_in) % 3600 / 60).round}"
+    else
+      "00:00"
+    end
+  end
+
+  def work_time_view_data
+    if work_in && work_out && break_time
+      "#{((work_out - work_in - break_time) / 3600).round}:#{((work_out - work_in - break_time) % 3600 / 60).round} "
+    else
+      "00:00"
+    end
+  end
+
+  def break_time_view_data
+    if !break_time
+      "#{(break_time / 3600).round}:#{(break_time % 3600 / 60).round}"
+    else
+      "00:00"
+    end
+  end
 end
