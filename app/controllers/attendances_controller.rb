@@ -3,16 +3,24 @@ class AttendancesController < ApplicationController
   before_action :set_record
   def index
     @wdays = %w[日 月 火 水 木 金 土]
-    day = Date.today
-    @start_date = Date::new(day.year,day.month, 1)
-    @end_date = Date::new(day.year,day.month, -1)
+    if params[:year_month]
+      puts params[:year_month]
+      inputs = params[:year_month].split("-").map {|n| n.to_i}
+      puts inputs
+      @start_date = Date::new(inputs[0],inputs[1], 1)
+      @end_date = Date::new(inputs[0],inputs[1], -1)
+    else
+      day = Date.today
+      @start_date = Date::new(day.year,day.month, 1)
+      @end_date = Date::new(day.year,day.month, -1)
+    end
     @data = []
     restraint_amount = 0
     work_amount = 0
     break_amount = 0
     (Date.parse("#{@start_date}")..Date.parse("#{@end_date}")).each do |date|
       @date = date
-      record = current_user.attendances.where(updated_at:date.all_day).first
+      record = current_user.attendances.where(work_in:date.all_day).first
       if record
         restraint_amount += record.restraint_time()
         work_amount += record.work_time()
@@ -21,9 +29,12 @@ class AttendancesController < ApplicationController
       record ||= current_user.attendances.build
       @data.append record
     end
+    puts break_amount
+    puts "amountooo"
     @restraint_data = time_to_view_data(restraint_amount)
     @work_data = time_to_view_data(work_amount)
     @break_data = time_to_view_data(break_amount)
+    puts @break_data
   end
 
   def new

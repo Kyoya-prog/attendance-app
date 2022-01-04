@@ -1,4 +1,8 @@
 <p>勤務表</p>
+<%= form_tag(attendances_path, method: :get) do %>
+  <%= month_field(nil,"year_month") %>
+  <%= submit_tag "選択" %>
+<% end %>
 <div class="container">
   <h1>1月の勤務表</h1>
   <table class="table" border="1" style="border-collapse: collapse">
