@@ -26,7 +26,6 @@ class AttendancesController < ApplicationController
   end
 
   def new
-    @record = fetch_current_attendance()
     puts @record
     puts "piyopiyo"
   end
@@ -79,10 +78,12 @@ class AttendancesController < ApplicationController
   end
 
   def fetch_current_attendance
-    current_attendance = current_user.attendances.last
-    if current_attendance == nil || current_attendance.work_out
+    current_attendance = current_user.attendances.where(updated_at:Date.today.all_day).first
+    if current_attendance == nil
       current_attendance = current_user.attendances.new()
     end
+    puts current_attendance
+    puts "hogehoge"
     return current_attendance
   end
 
