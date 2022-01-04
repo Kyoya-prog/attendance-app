@@ -1,5 +1,5 @@
 class AttendancesController < ApplicationController
-
+  include AttendancesHelper
   before_action :set_record
   def index
     @wdays = %w[日 月 火 水 木 金 土]
@@ -7,14 +7,23 @@ class AttendancesController < ApplicationController
     @start_date = Date::new(day.year,day.month, 1)
     @end_date = Date::new(day.year,day.month, -1)
     @data = []
-    #今月の羅列
+    restraint_amount = 0
+    work_amount = 0
+    break_amount = 0
     (Date.parse("#{@start_date}")..Date.parse("#{@end_date}")).each do |date|
       @date = date
-      record = current_user.attendances.where(updated_at:date.all_day)
-      record = record.first || current_user.attendances.build
+      record = current_user.attendances.where(updated_at:date.all_day).first
+      if record
+        restraint_amount += record.restraint_time()
+        work_amount += record.work_time()
+        break_amount += record.break_time
+      end
+      record ||= current_user.attendances.build
       @data.append record
     end
-    puts @data
+    @restraint_data = time_to_view_data(restraint_amount)
+    @work_data = time_to_view_data(work_amount)
+    @break_data = time_to_view_data(break_amount)
   end
 
   def new
@@ -44,7 +53,6 @@ class AttendancesController < ApplicationController
     if @record || @record.work_in != nil && @record.break_in != nil
       @record.break_out = current_date_time
       @record.break_time += @record.break_out - @record.break_in
-      puts @record.break_time
       @record.save
       redirect_to attendances_new_path
     end

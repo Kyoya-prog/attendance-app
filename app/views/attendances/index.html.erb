@@ -25,6 +25,18 @@
         <td><%= @data[i].break_time_view_data %> </td>
       </tr>
     <%end%>
+    <tr>
+      <td colspan="4"></td>
+      <td>拘束時間</td>
+      <td>労働時間</td>
+      <td>休憩時間</td>
+    </tr>
+    <tr>
+      <td colspan="4"></td>
+      <td><%= @restraint_data %></td>
+      <td><%= @work_data %></td>
+      <td><%= @break_data %></td>
+    </tr>
 
   </table>
 

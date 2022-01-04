@@ -65,8 +65,8 @@ module AttendanceDecorator
 
   def restraint_time_view_data # 拘束時間
     if work_in && work_out
-      hour = ((work_out - work_in) / 3600).round
-      minute = ((work_out - work_in) % 3600 / 60).round
+      hour = (restraint_time() / 3600).round
+      minute = (restraint_time() % 3600 / 60).round
       result = "#{sprintf("%02d",hour)}:#{sprintf("%02d",minute)}"
       result
     else
@@ -76,8 +76,8 @@ module AttendanceDecorator
 
   def work_time_view_data
     if work_in && work_out && break_time
-      hour = ((work_out - work_in - break_time) / 3600).round
-      minute = ((work_out - work_in - break_time) % 3600 / 60).round
+      hour = (work_time() / 3600).round
+      minute = (work_time() % 3600 / 60).round
       result = "#{sprintf("%02d",hour)}:#{sprintf("%02d",minute)}"
       result
     else
