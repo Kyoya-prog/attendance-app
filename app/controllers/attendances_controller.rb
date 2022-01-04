@@ -33,6 +33,8 @@ class AttendancesController < ApplicationController
   def register_break_out
     if @record || @record.work_in != nil && @record.break_in != nil
       @record.break_out = current_date_time
+      @record.break_time += @record.break_out - @record.break_in
+      puts @record.break_time
       @record.save
       redirect_to attendances_new_path
     end
@@ -41,7 +43,6 @@ class AttendancesController < ApplicationController
   def register_work_out
     if @record || @record.work_in != nil
       @record.work_out = current_date_time
-      @record.save
       redirect_to attendances_new_path
     end
   end
