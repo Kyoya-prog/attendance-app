@@ -1,12 +1,14 @@
-<h1>Sessions#new</h1>
-<h2>ログイン</h2>
-<p id="alert"><%= alert %></p>
-<%= form_with url:"signin" do |form| %>
-  <p>メールアドレス</p>
-  <%= form.text_field :email %>
-  <p>パスワード</p>
-  <%= form.text_field :password %>
-  <br>
-  <%= form.submit "ログイン"%>
-<% end %>
-<p>Find me in app/views/sessions/new.html.erb</p>
+ <div class = "container">
+    <h1>ログイン</h1>
+    <% if flash[:error].present? %>
+        <p class = "error"><%= flash[:error] %></p>
+    <% end %>
+   <%= form_with url:"signin" do |f| %>
+      <%= f.label :メールアドレス%>
+      <%= f.email_field :email,placeholder:"example@gmail.com" %>
+      <%= f.label :パスワード%>
+      <%= f.password_field :password %>
+      <br>
+      <%= f.submit "ログイン",class: 'submit'%>
+    <% end %>
+  </div>

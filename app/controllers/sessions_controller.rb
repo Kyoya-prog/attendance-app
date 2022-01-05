@@ -6,12 +6,12 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user = User.find_by(email: params[:email].downcase)
-    if user&.authenticate(params[:password])
-      sign_in user
+    @user = User.find_by(email: params[:email].downcase)
+    if @user&.authenticate(params[:password])
+      sign_in @user
       redirect_to attendances_new_path
     else
-      render 'new'
+      redirect_to signin_path, flash: { error: 'メールアドレスとパスワードが一致しません' }
     end
   end
 

@@ -15,3 +15,6 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # folder are already added.
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
 Rails.application.config.assets.precompile += %w[attendance_new.js]
+Rails.application.config.assets.precompile += %w( attendances )
+Rails.application.config.assets.precompile += %w( sessions )
+Rails.application.config.assets.precompile += %w( users )
