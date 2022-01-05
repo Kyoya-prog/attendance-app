@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  skip_before_action :login_check,only:[:new,:edit]
+  skip_before_action :login_check,only:[:new,:create]
   def new
 
   end
@@ -7,6 +7,7 @@ class SessionsController < ApplicationController
     user = User.find_by(email: params[:email].downcase)
     if user && user.authenticate(params[:password])
       sign_in user
+      redirect_to attendances_new_path
     else
       render 'new'
     end

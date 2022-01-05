@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   def login_check
     unless signed_in?
       flash[:alert] = "Please log in."
-      redirect_to sessions_new_path
+      redirect_to signin_path
     end
   end
 end
