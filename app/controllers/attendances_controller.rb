@@ -4,15 +4,15 @@ class AttendancesController < ApplicationController
   def index
     @wdays = %w[日 月 火 水 木 金 土]
     if params[:year_month]
-      puts params[:year_month]
       inputs = params[:year_month].split("-").map {|n| n.to_i}
-      puts inputs
       @start_date = Date::new(inputs[0],inputs[1], 1)
       @end_date = Date::new(inputs[0],inputs[1], -1)
+      @month = inputs[1]
     else
       day = Date.today
       @start_date = Date::new(day.year,day.month, 1)
       @end_date = Date::new(day.year,day.month, -1)
+      @month = day.month
     end
     @data = []
     restraint_amount = 0
@@ -29,8 +29,6 @@ class AttendancesController < ApplicationController
       record ||= current_user.attendances.build
       @data.append record
     end
-    puts break_amount
-    puts "amountooo"
     @restraint_data = time_to_view_data(restraint_amount)
     @work_data = time_to_view_data(work_amount)
     @break_data = time_to_view_data(break_amount)
@@ -41,7 +39,6 @@ class AttendancesController < ApplicationController
   end
 
   def register_work_in
-    puts "@record"
       new_record = current_user.attendances.build
       new_record.work_in = current_date_time
       if new_record.save
