@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
   skip_before_action :login_check
   def new
@@ -13,6 +15,7 @@ class UsersController < ApplicationController
       render 'new'
     end
   end
+
   private
 
   def user_params

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateAttendances < ActiveRecord::Migration[6.1]
   def change
     create_table :attendances do |t|
@@ -6,7 +8,7 @@ class CreateAttendances < ActiveRecord::Migration[6.1]
       t.datetime :break_out
       t.datetime :work_out
       t.timestamps
-      t.references :user,foreign_key: true
+      t.references :user, foreign_key: true
     end
   end
 end

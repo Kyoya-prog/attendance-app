@@ -1,11 +1,13 @@
-class SessionsController < ApplicationController
-  skip_before_action :login_check,only:[:new,:create]
-  def new
+# frozen_string_literal: true
 
+class SessionsController < ApplicationController
+  skip_before_action :login_check, only: %i[new create]
+  def new
   end
+
   def create
     user = User.find_by(email: params[:email].downcase)
-    if user && user.authenticate(params[:password])
+    if user&.authenticate(params[:password])
       sign_in user
       redirect_to attendances_new_path
     else
