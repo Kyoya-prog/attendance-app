@@ -1,47 +1,47 @@
-<p>勤務表</p>
-<%= form_tag(attendances_path, method: :get) do %>
-  <%= month_field(nil,"year_month") %>
-  <%= submit_tag "選択" %>
-<% end %>
+<%= stylesheet_link_tag "attendances", :media => "all" %>
 <div class="container">
-  <h1><%= "#{@month}月の勤務表" %></h1>
-  <table class="table" border="1" style="border-collapse: collapse">
-    <thead>
-    <tr>
-      <th>日付</th>
-      <th>曜</th>
-      <th>出社時間</th>
-      <th>退社時間</th>
-      <th>拘束時間</th>
-      <th>勤務時間</th>
-      <th>休憩時間</th>
-    </tr>
-    </thead>
-
-    <%=(Date.parse("#{@start_date}")..Date.parse("#{@end_date}")).each_with_index do |date,i| %>
+  <p>勤務表</p>
+  <%= form_tag(attendances_path, method: :get) do %>
+    <%= month_field :year_month,'',class:"year-month-field"%>
+    <%= submit_tag "選択",class:"year-month-choice" %>
+  <% end %>
+    <h1><%= "#{@month}月の勤務表" %></h1>
+    <table>
+      <thead>
       <tr>
-        <td><%=date.strftime("%m月%d日") %></td>
-        <td><%= @wdays[date.wday] %></td>
-        <td><%= @data[i].work_in_view_data %> </td>
-        <td><%= @data[i].work_out_view_data %> </td>
-        <td><%= @data[i].restraint_time_view_data %> </td>
-        <td><%= @data[i].work_time_view_data %> </td>
-        <td><%= @data[i].break_time_view_data %> </td>
+        <th>日付</th>
+        <th>曜日</th>
+        <th>出社時間</th>
+        <th>退社時間</th>
+        <th>拘束時間</th>
+        <th>勤務時間</th>
+        <th>休憩時間</th>
       </tr>
-    <%end%>
-    <tr>
-      <td colspan="4"></td>
-      <td>拘束時間</td>
-      <td>労働時間</td>
-      <td>休憩時間</td>
-    </tr>
-    <tr>
-      <td colspan="4"></td>
-      <td><%= @restraint_data %></td>
-      <td><%= @work_data %></td>
-      <td><%= @break_data %></td>
-    </tr>
+      </thead>
 
-  </table>
+      <%= (Date.parse("#{@start_date}")..Date.parse("#{@end_date}")).each_with_index do |date, i| %>
+        <tr>
+          <td><%= date.strftime("%m月%d日") %></td>
+          <td><%= @wdays[date.wday] %></td>
+          <td><%= @data[i].work_in_view_data %> </td>
+          <td><%= @data[i].work_out_view_data %> </td>
+          <td><%= @data[i].restraint_time_view_data %> </td>
+          <td><%= @data[i].work_time_view_data %> </td>
+          <td><%= @data[i].break_time_view_data %> </td>
+        </tr>
+      <% end %>
+      <tr>
+        <th colspan="4"></th>
+        <th>拘束時間</th>
+        <th>労働時間</th>
+        <th>休憩時間</th>
+      </tr>
+      <tr>
+        <td colspan="4"></td>
+        <td><%= @restraint_data %></td>
+        <td><%= @work_data %></td>
+        <td><%= @break_data %></td>
+      </tr>
 
+    </table>
 </div>

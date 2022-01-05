@@ -12,7 +12,7 @@ class UsersController < ApplicationController
       sign_in @user
       redirect_to attendances_new_path
     else
-      redirect_to signup_path ,flash: { error: @user.errors.full_messages }
+      redirect_to signup_path, flash: { error: @user.errors.full_messages }
     end
   end
 
