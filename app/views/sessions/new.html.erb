@@ -1,10 +1,6 @@
 <h1>Sessions#new</h1>
 <h2>ログイン</h2>
-<!--<ul>-->
-  <%# @user.errors.full_messages.each do |msg| %>
-<!--    <li><%#= msg %></li>-->
-  <%# end %>
-<!--</ul>-->
+<p id="alert"><%= alert %></p>
 <%= form_with url:"signin" do |form| %>
   <p>メールアドレス</p>
   <%= form.text_field :email %>
