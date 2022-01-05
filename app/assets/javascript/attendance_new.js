@@ -1,4 +1,4 @@
-const item = document.getElementById('item');
+const item = document.getElementById('clock');
 
 
 function time() {

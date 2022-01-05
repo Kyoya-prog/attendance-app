@@ -1,12 +1,23 @@
-<h1>登録</h1>
-
-<div>
-  <p id="item"></p>
-  <%= @record.work_in_button  %>
-  <%= @record.break_in_button  %>
-  <%= @record.break_out_button  %>
-  <%= @record.work_out_button  %>
+<%= stylesheet_link_tag "attendances", :media => "all" %>
+<div class = "container">
+  <h1>出退勤記録表</h1>
+  <div id="current_date"></p>
+    <script>
+      date = new Date()
+      year = date.getFullYear();
+      month = date.getMonth() + 1;
+      day = date.getDay()
+      document.getElementById("current_date").innerHTML = `今日は${month}月${day}日です`;
+    </script>
+  <p id="clock"></p>
+    <div class = "buttons">
+      <%= @record.work_in_button  %>
+      <%= @record.break_in_button  %>
+      <%= @record.break_out_button  %>
+      <%= @record.work_out_button  %>
+    </div>
 </div>
+<h2>現在状況：<b><%= @record.worker_status %></b></h2>
 
-
+<%= link_to "勤務表確認", attendances_path %>
 <%= javascript_include_tag 'attendance_new' %>
