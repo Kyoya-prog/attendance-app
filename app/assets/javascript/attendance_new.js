@@ -1,14 +1,23 @@
 const item = document.getElementById('clock');
 
+const date = document.getElementById("current_date")
+
 
 function time() {
     let today = new Date();
-    console.log(today.toLocaleString("ja"));
-    console.log(item)
     item.innerHTML = today.toLocaleString("ja");
     window.requestAnimationFrame(time);
 };
 
-console.log("hogehoge")
+function setDate() {
+    let date = new Date();
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate()
+    date.innerHTML = `今日は${month}月${day}日です`;
+}
 
 time();
+
+setDate();
+
