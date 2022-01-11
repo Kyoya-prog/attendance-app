@@ -2,11 +2,6 @@
 
 module AttendanceDecorator
   def work_in_button
-    Rails.logger.debug status
-    Rails.logger.debug work_in
-    Rails.logger.debug break_in
-    Rails.logger.debug break_out
-    Rails.logger.debug work_out
     button_to '出勤', attendances_work_in_path, { disabled: status.keys.first != :before_work }
   end
 
