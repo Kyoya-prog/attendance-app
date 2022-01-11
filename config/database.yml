@@ -12,7 +12,7 @@ default: &default
   timeout: 5000
 
 development:
-  <<: *default
+    <<: *default
   database: attendance_development
   username: development
   password: password
@@ -30,3 +30,8 @@ test:
 
 production:
   <<: *default
+  database: ENV['DATABASE_NAME']
+  username: ENV['DATABASE_USER']
+  password: ENV['DATABASE_PASSWORD']
+  host: ENV['DATABASE_HOST']
+

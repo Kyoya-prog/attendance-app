@@ -34,6 +34,8 @@ gem 'active_decorator'
 # Use Localization
 gem 'rails-i18n'
 
+gem 'dotenv-rails'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 

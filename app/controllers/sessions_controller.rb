@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
 
   def create
     @user = User.find_by(email: params[:email].downcase)
-    if @user&.authenticate(params[:password])
+    if @user.authenticate(params[:password])
       sign_in @user
       redirect_to attendances_new_path
     else
