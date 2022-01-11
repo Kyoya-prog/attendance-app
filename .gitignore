@@ -72,3 +72,5 @@ yarn-debug.log*
 # Ignore redis database content
 dump.rdb
 eval
+
+.env
