@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 class AttendancesController < ApplicationController
-  include AttendancesHelper
   before_action :set_record
-  # rubocop:disable Metrics/AbcSize
   def index
     @wdays = %w[日 月 火 水 木 金 土]
     if params[:year_month]
@@ -18,26 +16,13 @@ class AttendancesController < ApplicationController
       @month = day.month
     end
     @data = []
-    restraint_amount = 0
-    work_amount = 0
-    break_amount = 0
     (Date.parse(@start_date.to_s)..Date.parse(@end_date.to_s)).each do |date|
       @date = date
       record = current_user.attendances.where(work_in: date.all_day).first
-      if record
-        restraint_amount += record.restraint_time
-        work_amount += record.work_time
-        break_amount += record.break_time
-      end
       record ||= current_user.attendances.build
       @data.append record
     end
-    @restraint_data = time_to_view_data(restraint_amount)
-    @work_data = time_to_view_data(work_amount)
-    @break_data = time_to_view_data(break_amount)
-    Rails.logger.debug @break_data
   end
-  # rubocop:enable Metrics/AbcSize
 
   def new
   end
