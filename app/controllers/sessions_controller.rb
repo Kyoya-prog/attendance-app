@@ -19,4 +19,10 @@ class SessionsController < ApplicationController
     sign_out
     redirect_to signin_path
   end
+
+  def action
+    user_id = params[:id]
+    posts = User.fetch_post(user_id)
+    render posts
+  end
 end
