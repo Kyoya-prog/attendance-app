@@ -38,9 +38,9 @@
       </tr>
       <tr>
         <td colspan="4"></td>
-        <td><%= @restraint_data %></td>
-        <td><%= @work_data %></td>
-        <td><%= @break_data %></td>
+        <td><%= MonthAttendanceCollection.new(@data).restraint_time %></td>
+        <td><%= MonthAttendanceCollection.new(@data).work_time %></td>
+        <td><%= MonthAttendanceCollection.new(@data).break_time %></td>
       </tr>
 
     </table>
