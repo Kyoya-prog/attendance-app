@@ -2,6 +2,8 @@
 
 class AttendancesController < ApplicationController
   before_action :set_record
+  require 'date'
+
   def index
     @wdays = %w[日 月 火 水 木 金 土]
     day = Date.today
@@ -9,14 +11,16 @@ class AttendancesController < ApplicationController
     @start_date = day.beginning_of_month
     @end_date = day.end_of_month
     @month = day.month
-    @data = []
-    @data = current_user.attendances.where(created_at: @start_date.beginning_of_day..@end_date.end_of_day)
+    @data = {}
+    attendances = current_user.attendances.where(created_at: @start_date.beginning_of_day..@end_date.end_of_day)
+    (Date.parse(@start_date.to_s)..Date.parse(@end_date.to_s)).each do |date|
+      record = attendances.select { |attendance| attendance.work_date == date }.first || Attendance.new
+      @data[date] = record
+    end
   end
 
   def new
   end
-
-  require 'date'
 
   private
 

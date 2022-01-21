@@ -19,8 +19,7 @@
       </tr>
       </thead>
 
-      <% (Date.parse("#{@start_date}")..Date.parse("#{@end_date}")).each_with_index do |date, i| %>
-        <% attendance = MonthAttendanceCollection.new(@data).fetch(date) %>
+      <% @data.each do |date, attendance| %>
         <tr>
           <td><%= date.strftime("%m月%d日") %></td>
           <td><%= @wdays[date.wday] %></td>
@@ -41,7 +40,7 @@
         <td colspan="4"></td>
         <td><%= MonthAttendanceCollection.new(@data).restraint_time %></td>
         <td><%= MonthAttendanceCollection.new(@data).work_time %></td>
-        <td><%= MonthAttendanceCollection.new(@data).break_time %></td>
+        <td><%= MonthAt.tendanceCollection.new(@data).break_time %></td>
       </tr>
 
     </table>
