@@ -13,9 +13,9 @@ Rails.application.routes.draw do
   get 'attendances/new', to: 'attendances#new'
   get 'attendances', to: 'attendances#index'
 
-  post 'attendances/work_in', to: 'attendances#register_work_in'
-  post 'attendances/break_in', to: 'attendances#register_break_in'
-  post 'attendances/break_out', to: 'attendances#register_break_out'
-  post 'attendances/work_out', to: 'attendances#register_work_out'
+  post 'attendances/work_in', to: 'attendances_work_in#create'
+  post 'attendances/break_in', to: 'attendances_break_in#create'
+  post 'attendances/break_out', to: 'attendances_break_out#create'
+  post 'attendances/work_out', to: 'attendances_work_out#create'
 
 end

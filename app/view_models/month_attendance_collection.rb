@@ -3,7 +3,7 @@ class MonthAttendanceCollection
   attr_reader :attendances
 
   def initialize(attendances)
-    @attendances = attendances
+    @attendances = attendances.map { |_date, attendance| attendance }
   end
 
   def index(i)

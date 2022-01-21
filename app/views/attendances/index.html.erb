@@ -19,15 +19,16 @@
       </tr>
       </thead>
 
-      <% (Date.parse("#{@start_date}")..Date.parse("#{@end_date}")).each_with_index do |date, i| %>
+      <% (Date.parse(@start_date.to_s)..Date.parse(@end_date.to_s)).each do |date| %>
+        <% attendance = @attendances[date] || ActiveDecorator::Decorator.instance.decorate(Attendance.new) %>
         <tr>
           <td><%= date.strftime("%m月%d日") %></td>
           <td><%= @wdays[date.wday] %></td>
-          <td><%= @data[i].work_in_view_data %> </td>
-          <td><%= @data[i].work_out_view_data %> </td>
-          <td><%= @data[i].restraint_time_view_data %> </td>
-          <td><%= @data[i].work_time_view_data %> </td>
-          <td><%= @data[i].break_time_view_data %> </td>
+          <td><%= attendance.work_in_view_data %> </td>
+          <td><%= attendance.work_out_view_data %> </td>
+          <td><%= attendance.restraint_time_view_data %> </td>
+          <td><%= attendance.work_time_view_data %> </td>
+          <td><%= attendance.break_time_view_data %> </td>
         </tr>
       <% end %>
       <tr>
@@ -38,9 +39,9 @@
       </tr>
       <tr>
         <td colspan="4"></td>
-        <td><%= MonthAttendanceCollection.new(@data).restraint_time %></td>
-        <td><%= MonthAttendanceCollection.new(@data).work_time %></td>
-        <td><%= MonthAttendanceCollection.new(@data).break_time %></td>
+        <td><%= MonthAttendanceCollection.new(@attendances).restraint_time %></td>
+        <td><%= MonthAttendanceCollection.new(@attendances).work_time %></td>
+        <td><%= MonthAttendanceCollection.new(@attendances).break_time %></td>
       </tr>
 
     </table>
