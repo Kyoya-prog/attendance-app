@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_21_071232) do
+ActiveRecord::Schema.define(version: 2022_01_21_072725) do
 
   create_table "attendances", charset: "utf8", force: :cascade do |t|
     t.datetime "work_in"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 2022_01_21_071232) do
     t.bigint "user_id"
     t.integer "break_time", default: 0
     t.date "work_date"
+    t.index ["user_id", "work_date"], name: "index_attendances_on_user_id_and_work_date"
     t.index ["user_id"], name: "index_attendances_on_user_id"
   end
 
