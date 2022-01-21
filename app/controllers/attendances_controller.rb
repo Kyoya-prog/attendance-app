@@ -11,11 +11,8 @@ class AttendancesController < ApplicationController
     @start_date = day.beginning_of_month
     @end_date = day.end_of_month
     @month = day.month
-    @data = {}
-    attendances = current_user.attendances.where(created_at: @start_date.beginning_of_day..@end_date.end_of_day)
-    (Date.parse(@start_date.to_s)..Date.parse(@end_date.to_s)).each do |date|
-      record = attendances.select { |attendance| attendance.work_date == date }.first || Attendance.new
-      @data[date] = record
+    @attendances = current_user.attendances.where(work_date: @start_date..@end_date).each_with_object({}) do |attendance, hash|
+      hash[attendance.work_date] = attendance
     end
   end
 

@@ -3,7 +3,6 @@ class MonthAttendanceCollection
   attr_reader :attendances
 
   def initialize(attendances)
-    puts attendances
     @attendances = attendances.map { |_date, attendance| attendance }
   end
 
