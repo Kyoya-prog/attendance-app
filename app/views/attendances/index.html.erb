@@ -20,14 +20,15 @@
       </thead>
 
       <% (Date.parse("#{@start_date}")..Date.parse("#{@end_date}")).each_with_index do |date, i| %>
+        <% attendance = MonthAttendanceCollection.new(@data).fetch(date) %>
         <tr>
           <td><%= date.strftime("%m月%d日") %></td>
           <td><%= @wdays[date.wday] %></td>
-          <td><%= @data[i].work_in_view_data %> </td>
-          <td><%= @data[i].work_out_view_data %> </td>
-          <td><%= @data[i].restraint_time_view_data %> </td>
-          <td><%= @data[i].work_time_view_data %> </td>
-          <td><%= @data[i].break_time_view_data %> </td>
+          <td><%= attendance.work_in_view_data %> </td>
+          <td><%= attendance.work_out_view_data %> </td>
+          <td><%= attendance.restraint_time_view_data %> </td>
+          <td><%= attendance.work_time_view_data %> </td>
+          <td><%= attendance.break_time_view_data %> </td>
         </tr>
       <% end %>
       <tr>

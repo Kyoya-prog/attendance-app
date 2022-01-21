@@ -10,6 +10,10 @@ class MonthAttendanceCollection
     @attendances[i]
   end
 
+  def fetch(date)
+    @attendances.select { |attendance| attendance.created_at == date }.first || ActiveDecorator::Decorator.instance.decorate(Attendance.new)
+  end
+
   def restraint_time
     result = 0
     @attendances.each do |attendance|

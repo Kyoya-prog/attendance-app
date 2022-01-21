@@ -10,12 +10,7 @@ class AttendancesController < ApplicationController
     @end_date = day.end_of_month
     @month = day.month
     @data = []
-    (Date.parse(@start_date.to_s)..Date.parse(@end_date.to_s)).each do |date|
-      @date = date
-      record = current_user.attendances.where(work_in: date.all_day).first
-      record ||= current_user.attendances.build
-      @data.append record
-    end
+    @data = current_user.attendances.where(created_at: @start_date.beginning_of_day..@end_date.end_of_day)
   end
 
   def new
