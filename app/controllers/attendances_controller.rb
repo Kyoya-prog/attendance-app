@@ -16,42 +16,6 @@ class AttendancesController < ApplicationController
   def new
   end
 
-  def register_work_in
-    new_record = current_user.attendances.build
-    new_record.work_in = current_date_time
-    if new_record.save
-      redirect_to attendances_new_path
-    else
-      Rails.logger.debug 'error'
-
-    end
-  end
-
-  def register_break_in
-    return unless @record || !@record.work_in.nil?
-
-    @record.break_in = current_date_time
-    @record.save
-    redirect_to attendances_new_path
-  end
-
-  def register_break_out
-    return unless @record || (!@record.work_in.nil? && !@record.break_in.nil?)
-
-    @record.break_out = current_date_time
-    @record.break_time += @record.break_out - @record.break_in
-    @record.save
-    redirect_to attendances_new_path
-  end
-
-  def register_work_out
-    return unless @record || !@record.work_in.nil?
-
-    @record.work_out = current_date_time
-    @record.save
-    redirect_to attendances_new_path
-  end
-
   require 'date'
 
   private
