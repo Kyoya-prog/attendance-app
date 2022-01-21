@@ -6,8 +6,7 @@ class AttendancesController < ApplicationController
 
   def index
     @wdays = %w[日 月 火 水 木 金 土]
-    day = Date.today
-    day = Date.parse("#{params[:year_month][0]}-01") if params[:year_month]
+    day = params[:year_month] ? Date.parse("#{params[:year_month][0]}-01") : Date.today
     @start_date = day.beginning_of_month
     @end_date = day.end_of_month
     @month = day.month
