@@ -4,17 +4,11 @@ class AttendancesController < ApplicationController
   before_action :set_record
   def index
     @wdays = %w[日 月 火 水 木 金 土]
-    if params[:year_month]
-      inputs = params[:year_month][0].split('-').map(&:to_i)
-      @start_date = Date.new(inputs[0], inputs[1], 1)
-      @end_date = Date.new(inputs[0], inputs[1], -1)
-      @month = inputs[1]
-    else
-      day = Date.today
-      @start_date = Date.new(day.year, day.month, 1)
-      @end_date = Date.new(day.year, day.month, -1)
-      @month = day.month
-    end
+    day = Date.today
+    day = Date.parse("#{params[:year_month][0]}-01") if params[:year_month]
+    @start_date = day.beginning_of_month
+    @end_date = day.end_of_month
+    @month = day.month
     @data = []
     (Date.parse(@start_date.to_s)..Date.parse(@end_date.to_s)).each do |date|
       @date = date
